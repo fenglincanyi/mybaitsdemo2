@@ -20,4 +20,8 @@
         </environment>
     </environments>
 
+    <mappers>
+        <package name="com.gjr.mapper"/>
+    </mappers>
+
 </configuration>

@@ -43,6 +43,7 @@
     </dependencies>
     <build>
         <plugins>
+            <!-- 加入 mybatis 代码生成插件-->
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
