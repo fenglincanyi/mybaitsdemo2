@@ -2,19 +2,54 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gjr.mapper.OrdersCustomMapper">
     <select id="queryOrdersUser" resultType="com.gjr.po.OrdersCustom">
+--     查询订单的信息及用户信息
         select
         orders.*,user.username,user.sex, user.address
         from orders, user
         where orders.user_id=user.id
     </select>
     <select id="queryOrdersUser1" resultMap="OrdersUserResultMap">
+--     查询用户订单详情
         select
         orders.*,user.username,user.sex, user.address
         from orders, user
         where orders.user_id=user.id
     </select>
+    <select id="queryOrdersDetailUser" resultMap="OrdersDetailUserMap">
+--     查询用户订单明细详情
+    select
+        orders.*,
+        user.username,user.sex, user.address,
+        orderdetail.id orderdetail_id,
+        orderdetail.items_id,
+        orderdetail.items_num,
+        orderdetail.orders_id
+    from orders, user, orderdetail
+    where orders.user_id = user.id and orders_id = orders.id
+    </select>
+    <select id="queryOrdersDetailUserItems" resultMap="OrdersDetailUserItemsMap">
+--     查询用户订单商品明细
+        SELECT
+          orders.*,
+          user.username,
+          user.sex,
+          user.address,
+          orderdetail.id orderdetail_id,
+          orderdetail.items_id,
+          orderdetail.items_num,
+          orderdetail.orders_id,
+          items.name items_name,
+          items.detail items_detail,
+          items.price items_price
+        FROM
+          orders,
+          user,
+          orderdetail,
+          items
+        WHERE orders.user_id = user.id AND orderdetail.orders_id=orders.id AND orderdetail.items_id = items.id
+    </select>
 
-
+    <!-- 一对一 -->
     <resultMap id="OrdersUserResultMap" type="com.gjr.po.Orders">
         <!-- 配置订单信息 -->
         <id column="id" property="id"/>
@@ -30,5 +65,57 @@
             <result column="sex" property="sex"/>
             <result column="address" property="address"/>
         </association>
+    </resultMap>
+
+
+    <!-- 一对多 -->
+    <resultMap id="OrdersDetailUserMap" type="com.gjr.po.Orders" extends="OrdersUserResultMap">
+        <!-- 用户信息、订单信息、复用前面的-->
+        
+        <collection property="orderdetailList" ofType="com.gjr.po.Orderdetail"> <!--使用 ofType-->
+            <id column="orderdetail_id" property="id"/>
+            <result column="items_id" property="itemsId"/>
+            <result column="items_num" property="itemsNum"/>
+            <result column="orders_id" property="ordersId"/>
+        </collection>
+    </resultMap>
+
+
+    <!-- 玩转 这个就全部掌握 ！！！-->
+    <!-- 多对多-->
+    <resultMap id="OrdersDetailUserItemsMap" type="com.gjr.po.User">
+        <!-- 用户信息-->
+        <id column="user_id" property="id"/> <!-- 根据查询结果 写 column !!! -->
+        <result column="username" property="username"/>
+        <result column="sex" property="sex"/>
+        <result column="address" property="address"/>
+
+
+        <!-- 订单信息: 一个用户对应多个订单-->
+        <collection property="ordersList" ofType="com.gjr.po.Orders">
+            <id column="id" property="id"/>
+            <result column="user_id" property="userId"/>
+            <result column="number" property="number"/>
+            <result column="createtime" property="createtime"/>
+            <result column="note" property="note"/>
+
+
+            <!-- 订单明细：一个订单对应多个明细 -->
+            <collection property="orderdetailList" ofType="com.gjr.po.Orderdetail">
+                <id column="orderdetail_id" property="id"/>
+                <result column="items_id" property="itemsId"/>
+                <result column="items_num" property="itemsNum"/>
+                <result column="orders_id" property="ordersId"/>
+
+
+                <!-- 商品信息：一个明细对应一个商品 -->
+                <association property="items" javaType="com.gjr.po.Items">
+                    <id column="items_id" property="id"/>
+                    <result column="items_name" property="name"/>
+                    <result column="items_detail" property="detail"/>
+                    <result column="items_price" property="price"/>
+                </association>
+            </collection>
+        </collection>
     </resultMap>
 </mapper>

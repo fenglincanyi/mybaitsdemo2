@@ -1,6 +1,8 @@
 package com.gjr.mapper;
 
+import com.gjr.po.Orders;
 import com.gjr.po.OrdersCustom;
+import com.gjr.po.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -37,8 +39,21 @@ public class OrdersCustomMapperTest {
     @Test
     public void queryOrdersUser1() throws Exception {
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        List<OrdersCustom> list = sqlSession.getMapper(OrdersCustomMapper.class).queryOrdersUser1();
+        List<Orders> list = sqlSession.getMapper(OrdersCustomMapper.class).queryOrdersUser1();
         System.out.println(list);
     }
 
+    @Test
+    public void queryOrdersDetailUser() throws Exception {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        List<Orders> list = sqlSession.getMapper(OrdersCustomMapper.class).queryOrdersDetailUser();
+        System.out.println(list);
+    }
+
+    @Test
+    public void queryOrdersDetailUserItems() throws Exception {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        List<User> list = sqlSession.getMapper(OrdersCustomMapper.class).queryOrdersDetailUserItems();
+        System.out.println(list);
+    }
 }

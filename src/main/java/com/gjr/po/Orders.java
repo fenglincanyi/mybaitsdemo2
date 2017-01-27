@@ -1,6 +1,7 @@
 package com.gjr.po;
 
 import java.util.Date;
+import java.util.List;
 
 public class Orders {
 
@@ -27,6 +28,18 @@ public class Orders {
         this.user = user;
     }
 
+    /**
+     * 一对多查询：使用 resultMap, collection
+     */
+    private List<Orderdetail> orderdetailList;
+
+    public List<Orderdetail> getOrderdetailList() {
+        return orderdetailList;
+    }
+
+    public void setOrderdetailList(List<Orderdetail> orderdetailList) {
+        this.orderdetailList = orderdetailList;
+    }
 
 
 

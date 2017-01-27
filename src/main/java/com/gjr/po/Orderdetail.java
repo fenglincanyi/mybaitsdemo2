@@ -10,6 +10,19 @@ public class Orderdetail {
 
     private Integer itemsNum;
 
+    /**
+     * 一个明细对应一个商品
+     */
+    private Items items;
+
+    public Items getItems() {
+        return items;
+    }
+
+    public void setItems(Items items) {
+        this.items = items;
+    }
+
     public Integer getId() {
         return id;
     }

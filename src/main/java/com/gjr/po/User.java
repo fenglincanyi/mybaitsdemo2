@@ -1,6 +1,7 @@
 package com.gjr.po;
 
 import java.util.Date;
+import java.util.List;
 
 public class User {
 
@@ -9,6 +10,21 @@ public class User {
     private String sex;// 性别
     private Date birthday;// 生日
     private String address;// 地址
+
+
+    /**
+     * 多对多查询：一个用户对应多个订单，订单po复用之前的
+     */
+    private List<Orders> ordersList;
+
+    public List<Orders> getOrdersList() {
+        return ordersList;
+    }
+
+    public void setOrdersList(List<Orders> ordersList) {
+        this.ordersList = ordersList;
+    }
+
 
     public int getId() {
         return id;
