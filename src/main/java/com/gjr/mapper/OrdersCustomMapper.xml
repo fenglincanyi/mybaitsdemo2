@@ -7,4 +7,28 @@
         from orders, user
         where orders.user_id=user.id
     </select>
+    <select id="queryOrdersUser1" resultMap="OrdersUserResultMap">
+        select
+        orders.*,user.username,user.sex, user.address
+        from orders, user
+        where orders.user_id=user.id
+    </select>
+
+
+    <resultMap id="OrdersUserResultMap" type="com.gjr.po.Orders">
+        <!-- 配置订单信息 -->
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="number" property="number"/>
+        <result column="createtime" property="createtime"/>
+        <result column="note" property="note"/>
+
+        <!-- 配置用户信息 -->
+        <association property="user" javaType="com.gjr.po.User"> <!-- 这个 property="user" 就是 com.gjr.po.Orders 中增加的那个 user 属性-->
+            <id column="user_id" property="id"/> <!-- column="user_id" 是查出来的结果中 用户的 唯一标示 -->
+            <result column="username" property="username"/>
+            <result column="sex" property="sex"/>
+            <result column="address" property="address"/>
+        </association>
+    </resultMap>
 </mapper>

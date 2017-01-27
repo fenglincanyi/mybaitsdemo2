@@ -34,4 +34,11 @@ public class OrdersCustomMapperTest {
         System.out.println(list);
     }
 
+    @Test
+    public void queryOrdersUser1() throws Exception {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        List<OrdersCustom> list = sqlSession.getMapper(OrdersCustomMapper.class).queryOrdersUser1();
+        System.out.println(list);
+    }
+
 }
