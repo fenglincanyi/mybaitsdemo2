@@ -6,6 +6,13 @@
 
     <properties resource="db.properties"/>
 
+    <settings>
+        <!-- 打开 延迟加载 的开关-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 设置按需加载 -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+
     <environments default="development">
         <environment id="development">
             <!-- 使用jdbc事务管理，事务控制由mybatis-->

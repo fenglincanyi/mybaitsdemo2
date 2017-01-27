@@ -23,4 +23,7 @@ public interface OrdersCustomMapper {
 
     // 多对多，查询用户订单详情商品详情信息
     List<User> queryOrdersDetailUserItems();
+
+    // 懒加载测试
+    List<Orders> findOrdersUserLazyLoading();
 }

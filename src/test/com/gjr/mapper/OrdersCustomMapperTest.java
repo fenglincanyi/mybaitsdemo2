@@ -56,4 +56,16 @@ public class OrdersCustomMapperTest {
         List<User> list = sqlSession.getMapper(OrdersCustomMapper.class).queryOrdersDetailUserItems();
         System.out.println(list);
     }
+
+    @Test
+    public void findOrdersUserLazyLoading() throws Exception {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        List<Orders> list = sqlSession.getMapper(OrdersCustomMapper.class).findOrdersUserLazyLoading();
+
+        // 打断点测试效果
+        for (Orders orders : list) {
+            User user = orders.getUser();
+            System.out.println(user);
+        }
+    }
 }
